@@ -39,6 +39,20 @@ local banks = {
         name = "Fleeca Bank"
     }
 }
+
+CreateThread(function()
+    for _, blips in ipairs(banks) do
+        local blip = AddBlipForCoord(blips.coords)
+        SetBlipSprite(blip, 431)
+        SetBlipColour(blip, 2)
+        SetBlipScale(blip, 1.0)
+        SetBlipAsShortRange(blip, true)
+        BeginTextCommandSetBlipName("STRING")
+        AddTextComponentString(blips.name)
+        EndTextCommandSetBlipName(blip)
+    end
+end)
+
 local fixAnim = false
 local fixClickAnim = false
 
@@ -91,7 +105,7 @@ RegisterNUICallback("interactATM", function(data)
             personalAccountBalance = character.bank,
             result = result
         })
-    end, data.interaction, selectedATM)
+    end, selectedATM)
 end)
 
 RegisterNUICallback("sound", function(data)
@@ -170,7 +184,7 @@ end)
 function start()
     SendNUIMessage({
         type = "atmValues",
-        values = config.ATM
+        values = config.valuesWithdrawATM
     })
     lib.callback("Ayse_Banking:getInfo", false, function(bank, invoices, history)
         if not bank then return end
@@ -187,6 +201,7 @@ function start()
 end
 
 AddEventHandler("playerSpawned", function()
+    Wait(5000)
     start()
 end)
 
@@ -194,6 +209,7 @@ AddEventHandler("onResourceStart", function(resourceName)
     if (GetCurrentResourceName() ~= resourceName) then
         return
     end
+    Wait(1000)
     start()
 end)
 
