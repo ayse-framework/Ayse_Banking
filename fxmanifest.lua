@@ -1,6 +1,6 @@
 author "helmimarif"
-description "Banking resource for Ayse Framework"
-version "1.0"
+description "Banking Resource for Ayseframework"
+version "2.0"
 
 fx_version "cerulean"
 game "gta5"
@@ -27,4 +27,7 @@ client_scripts {
     "client.lua"
 }
 
-dependency "Ayse_Core"
+dependencies {
+    "Ayse_Core",
+    "ox_lib"
+}
